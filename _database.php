@@ -1,6 +1,6 @@
 <?php
-$username="kippo";
-$password="AIUSf12hk1436saljg1bklbasyibaol";
-$server="127.0.0.1";
-$database="kippo";
+$username="YOUR DATABASE USER HERE";
+$password="YOUR PASSWORD HERE";
+$server="YOUR MYSQL HOST HERE";
+$database="YOUR DATABASE HERE";
 ?>
