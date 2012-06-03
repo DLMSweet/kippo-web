@@ -21,7 +21,7 @@ function printSensorHitCount() {
     include "_database.php";
     mysql_connect($server,$username,$password);
     @mysql_select_db($database) or die( "Unable to select database");
-    $query_getInput="SELECT sensors.ip,COUNT(*) from sessions LEFT JOIN sensors ON sensors.id = sessions.sensor GROUP BY sensors.ip ORDER BY COUNT(*) DESC;";
+    $query_getInput="SELECT sensors.ip,COUNT(*) from sessions RIGHT JOIN sensors ON sensors.id = sessions.sensor GROUP BY sensors.ip ORDER BY COUNT(*) DESC;";
     $gotInput=mysql_query($query_getInput);
     $num=mysql_numrows($gotInput);
     mysql_close();
@@ -102,8 +102,33 @@ function detail_ip($ip) {
 }
 
 function print_playlogs() {
-    $command="./bin/genKippoPlaylogs.sh";
-    echo passthru( $command );
+    $ttyDir="/opt/kippo/log/tty/";
+    // open this directory 
+    $myDirectory = opendir($ttyDir);
+    // get each entry
+    while($entryName = readdir($myDirectory)) {
+        $dirArray[] = $entryName;
+    }
+    // close directory
+    closedir($myDirectory);
+    //	count elements in array
+    $indexCount	= count($dirArray);
+    // print 'em
+    print("<TABLE border=1 cellpadding=5 cellspacing=0 class=whitelinks>\n");
+    print("<TR><TH>Filename</TH><th>Filesize</th></TR>\n");
+    // loop through the array of files and print them all
+    for($index=0; $index < $indexCount; $index++) {
+            if (substr("$dirArray[$index]", 0, 1) != "."){ // don't list hidden files
+                if (filesize("$ttyDir$dirArray[$index]")>1000) { //Only print files larger than 1000 bytes
+                print("<TR><TD><a href=\"playlog/?l=$dirArray[$index]\">$dirArray[$index]</a></td>");
+                print("<td>");
+                print(filesize("$ttyDir$dirArray[$index]"));
+                print("</td>");
+                print("</TR>\n");
+            }
+        }
+    }
+    print("</TABLE>\n");
 }
 
 ?>
