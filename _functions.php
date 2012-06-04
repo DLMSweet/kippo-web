@@ -159,4 +159,63 @@ function print_playlogs() {
     print("</TABLE>\n");
 }
 
+function print_textLogs() {
+        include "_database.php";
+	mysql_connect($server,$username,$password);
+	@mysql_select_db($database) or die( "Unable to select database");
+	$query = "SELECT sessions.id,sensors.ip AS sensor_ip,sessions.ip AS session_IP,starttime,endtime FROM sessions LEFT JOIN auth ON sessions.id=auth.session LEFT JOIN sensors ON sensors.id=sessions.sensor WHERE success=1;";
+	$result=mysql_query($query);
+	$num=mysql_numrows($result);
+	mysql_close();
+        echo "<h3>Text-based logs of successful logins</h3>";
+	echo "<table border=1>\n";
+	echo "<tr><td><b>Session ID</b></td><td><b>Sensor</b></td><td><b>IP</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Commands Run</b></td></tr>\n";
+
+	$i=0;
+	while ($i < $num) {
+		$id=mysql_result($result,$i,"id");
+		$sensor=mysql_result($result,$i,"sensor_ip");
+		$ip=mysql_result($result,$i,"session_IP");
+		$starttime=mysql_result($result,$i,"starttime");
+		$endtime=mysql_result($result,$i,"endtime");
+
+		mysql_connect($server,$username,$password);
+		@mysql_select_db($database) or die( "Unable to select database");
+		$input_count_query = "select input from input where session='$id'";
+		$input_count=mysql_numrows(mysql_query($input_count_query));
+
+		mysql_close();
+		if ( $input_count > 0 ) {
+			echo "<tr><td>$id</td><td>$sensor</td><td>$ip</td><td>$starttime</td><td>$endtime</td><td>$input_count</td></tr>\n\n";
+			echo "<tr><td colspan=6>\n<div class='spoiler'>\n<input type='button' onclick='showSpoiler(this);' value='Show Commands run' />\n<div class='inner' style='display:none;'>\n";
+			printInput($id);
+			echo "</div>\n</div>\n</td></tr>\n";
+		}
+
+		$i++;
+	}
+	echo "</table>";
+}
+
+function recentAttacks() {
+    include "_database.php";
+    mysql_connect($server,$username,$password);
+    @mysql_select_db($database) or die( "Unable to select database");
+    $query_getInput="SELECT DISTINCT(sessions.ip) AS remote_ip,sensors.ip AS sensor FROM sessions LEFT JOIN sensors ON sessions.sensor=sensors.id WHERE sessions.starttime>NOW() - INTERVAL 15 MINUTE;";
+    $gotInput=mysql_query($query_getInput);
+    $num=mysql_numrows($gotInput);
+    mysql_close();
+    $line=0;
+    echo "<h3>Recent Attacks (last 15 Minutes)</h3>";
+    echo "<table border=1>\n";
+    echo "<tr><td>Login Attempts</td><td>IP Address</td><td>GeoIP</td></tr>\n";
+    while ($line < $num) {
+        $remote_ip=mysql_result($gotInput,$line,"remote_ip");
+        $sensor=mysql_result($gotInput,$line,"sensor");
+        $geoIP=geoip_country_name_by_name($remote_ip);
+        echo "<tr><td>$sensor</td><td><a href=show.php?id=Detail&ip=$remote_ip>$remote_ip</a></td><td>$geoIP</td></tr>\n";
+        $line++;
+    }
+    echo "</table>";
+}
 ?>
