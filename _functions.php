@@ -76,6 +76,33 @@ function print_loginAttempts() {
     }
 }
 
+function getWhois($ip) {
+	$queryInput = $ip;
+	// create a new cURL resource
+	$ch = curl_init();
+
+	// set URL and other appropriate options
+	curl_setopt($ch, CURLOPT_URL, 'http://whois.arin.net/rest/ip/' . $queryInput);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array('Accept: application/json'));
+
+	// execute
+	$returnValue = curl_exec($ch);
+
+	// close cURL resource, and free up system resources
+	curl_close($ch);
+
+	$result = json_decode($returnValue);
+
+        echo "<pre>";
+	echo "Handle: {$result->net->handle->{'$'}}<br />";
+	echo "Ref: {$result->net->ref->{'$'}}<br />";
+	echo "Name: {$result->net->name->{'$'}}<br />";
+	echo "OrgRef: {$result->net->orgRef->{'@name'}}<br />";
+	echo "</pre>";
+}
+
 function detail_ip($ip) {
     include "_database.php";
     mysql_connect($server,$username,$password);
@@ -85,6 +112,7 @@ function detail_ip($ip) {
     $num=mysql_numrows($gotInput);
     mysql_close();
     $line=0;
+//    getWhois($ip);
     echo "<h3>Logins attempted from $ip</h3>";
     echo "<table border=1>\n";
     echo "<tr><td>Username</td><td>Password</td><td>Time Tried</td><td>Success</td></tr>\n";
