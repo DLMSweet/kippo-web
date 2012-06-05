@@ -1,0 +1,29 @@
+You will need the following installed packages (as well as any dependencies):
+php,php-mysql,pecl-geoip
+you'll also need kippo playback via Ajaxterm setup via:
+https://groups.google.com/forum/#!topic/kippousers/A6-xWxAElRY
+For the lazy:
+1. Get stuff and patch
+wget http://yog-sothoth.dragonlight.fi/kippo-ajaxterm.tar.gz
+wget http://yog-sothoth.dragonlight.fi/ajaxtermfix.patch
+patch -p0 < ajaxterfix.patch
+
+2. Open ajaxterm.py in editor and as Upi said - Grep for "/home/
+desaster"... and fix the paths :-)
+
+3. Run ajaxterm.py (no real need to install it even) and it will
+listen on port 8022 by default
+
+4. Set proxy in apache as below (or equivalent)
+<Location /playlog>
+    ProxyPass http://localhost:8022 ttl=60
+    ProxyPassReverse http://localhost:8022
+    Order deny,allow
+    Allow from all
+</Location> 
+
+Credit for that all to Tomasz Miklas and Upi Tamminen
+
+I would *strongly* advise running ajaxterm as an umprivileged user.
+
+
