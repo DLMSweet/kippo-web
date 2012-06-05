@@ -140,6 +140,7 @@ function print_playlogs() {
     // close directory
     closedir($myDirectory);
     //	count elements in array
+    sort($dirArray);
     $indexCount	= count($dirArray);
     // print 'em
     print("<TABLE border=1 cellpadding=5 cellspacing=0 class=whitelinks>\n");
