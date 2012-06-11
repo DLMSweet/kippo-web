@@ -22,6 +22,9 @@ elseif ( $toShow == "Detail" ) {
 elseif ( $toShow =="sensorHitRate" ) {
     printSensorHitCount();
 }
+elseif ( $toShow =="textlogs" ) {
+    print_textLogs(PHP_INT_MAX);
+}
 else {
     echo "What.";
 }

@@ -4,5 +4,5 @@ include "_functions.php";
 include "header.php";
 
 recentAttacks();
-print_textLogs();
+print_textLogs(10);
 ?>

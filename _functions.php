@@ -60,7 +60,7 @@ function print_loginAttempts() {
     include "_database.php";
     mysql_connect($server,$username,$password);
     @mysql_select_db($database) or die( "Unable to select database");
-    $query_getInput="SELECT username,password,COUNT(*) FROM auth GROUP BY username,password ORDER BY COUNT(*) DESC;";
+    $query_getInput="SELECT username,password,COUNT(*) FROM auth GROUP BY username,password ORDER BY COUNT(*) DESC ;";
     $gotInput=mysql_query($query_getInput);
     $num=mysql_numrows($gotInput);
     mysql_close();
@@ -160,20 +160,20 @@ function print_playlogs() {
     print("</TABLE>\n");
 }
 
-function print_textLogs() {
+function print_textLogs($count) {
         include "_database.php";
 	mysql_connect($server,$username,$password);
 	@mysql_select_db($database) or die( "Unable to select database");
-	$query = "SELECT sessions.id,sensors.ip AS sensor_ip,sessions.ip AS session_IP,starttime,endtime FROM sessions LEFT JOIN auth ON sessions.id=auth.session LEFT JOIN sensors ON sensors.id=sessions.sensor WHERE success=1;";
+	$query = "SELECT sessions.id,sensors.ip AS sensor_ip,sessions.ip AS session_IP,starttime,endtime FROM sessions LEFT JOIN auth ON sessions.id=auth.session LEFT JOIN sensors ON sensors.id=sessions.sensor WHERE success=1 ORDER BY starttime DESC;";
 	$result=mysql_query($query);
 	$num=mysql_numrows($result);
 	mysql_close();
+        
         echo "<h3>Text-based logs of successful logins</h3>";
 	echo "<table border=1>\n";
 	echo "<tr><td><b>Session ID</b></td><td><b>Sensor</b></td><td><b>IP</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Commands Run</b></td></tr>\n";
-
 	$i=0;
-	while ($i < $num) {
+	while ($i < $num and $i < $count) {
 		$id=mysql_result($result,$i,"id");
 		$sensor=mysql_result($result,$i,"sensor_ip");
 		$ip=mysql_result($result,$i,"session_IP");
@@ -192,8 +192,10 @@ function print_textLogs() {
 			printInput($id);
 			echo "</div>\n</div>\n</td></tr>\n";
 		}
-
-		$i++;
+                else {
+                        $count++;
+                }
+        $i++;
 	}
 	echo "</table>";
 }

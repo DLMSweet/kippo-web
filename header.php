@@ -10,6 +10,7 @@ echo "<a href='index.php'>Main Page</a><br>\n";
 echo "<a href='show.php?id=ips'>Show Remote IP addresses</a><br>\n";
 echo "<a href='show.php?id=logins'>Show Login attempts</a><br>\n";
 echo "<a href='show.php?id=Playlogs'>Playback sessions</a><br>\n";
-echo "<a href='show.php?id=sensorHitRate'>Show Sensor Hitrate</a><br><br>\n";
-
+echo "<a href='show.php?id=sensorHitRate'>Show Sensor Hitrate</a><br>\n";
+echo "<a href='show.php?id=textlogs'>Show Text logs</a><br><br>\n";
+echo "<hr>"
 ?>
