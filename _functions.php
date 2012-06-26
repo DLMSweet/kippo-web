@@ -24,8 +24,8 @@ function printSensorHitCount() {
     $query_getInput="SELECT sensors.ip,COUNT(*) from sessions RIGHT JOIN sensors ON sensors.id = sessions.sensor GROUP BY sensors.ip ORDER BY COUNT(*) DESC;";
     $gotInput=mysql_query($query_getInput);
     $num=mysql_numrows($gotInput);
-    mysql_close();
     $line=0;
+    echo "<h3>Hit rate by Sensor</h3>\n";
     echo "<table border=1>\n";
     echo "<tr><td>Sensor Name</td><td>Times Hit</td></tr>\n";
     while ($line < $num) {
@@ -34,6 +34,28 @@ function printSensorHitCount() {
         echo "<tr><td>$sensor</td><td>$hitcount</td></tr>\n";
         $line++;
     }
+    echo "</table>";
+}
+
+function printSensorLoginCount() {
+    include "_database.php";
+    mysql_connect($server,$username,$password);
+    @mysql_select_db($database) or die( "Unable to select database");
+    $query_getInput="SELECT sensors.ip,COUNT(sessions.ip) as logins FROM sessions LEFT JOIN auth ON auth.session = sessions.id LEFT JOIN sensors ON sessions.sensor = sensors.id WHERE auth.success=1 GROUP BY sensors.ip ORDER BY COUNT(sessions.ip) DESC;";
+    $gotInput=mysql_query($query_getInput);
+    $num=mysql_numrows($gotInput);
+    mysql_close();
+    $line=0;
+    echo "<h3>Times logged into by Sensor</h3>\n";
+    echo "<table border=1>\n";
+    echo "<tr><td>Sensor Name</td><td>Times logged into</td></tr>\n";
+    while ($line < $num) {
+        $sensor=mysql_result($gotInput,$line,"sensors.ip");
+        $hitcount=mysql_result($gotInput,$line,"logins");
+        echo "<tr><td>$sensor</td><td>$hitcount</td></tr>\n";
+        $line++;
+    }
+    echo "</table>";
 }
 
 function print_uniqIps() {
