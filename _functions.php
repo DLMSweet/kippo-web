@@ -192,7 +192,7 @@ function print_textLogs($count) {
 	mysql_close();
         
         echo "<h3>Text-based logs of successful logins</h3>";
-	echo "<table border=1>\n";
+	echo "<table class=\"table\">\n";
 	echo "<tr><td><b>Session ID</b></td><td><b>Sensor</b></td><td><b>IP</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Commands Run</b></td></tr>\n";
 	$i=0;
 	while ($i < $num and $i < $count) {
@@ -232,7 +232,7 @@ function recentAttacks() {
     mysql_close();
     $line=0;
     echo "<h3>Recent Attacks (last 15 Minutes)</h3>";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Login Attempts</td><td>IP Address</td><td>GeoIP</td></tr>\n";
     while ($line < $num) {
         $remote_ip=mysql_result($gotInput,$line,"remote_ip");

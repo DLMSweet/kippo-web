@@ -16,18 +16,20 @@
     </style>
     <script type='text/javascript'>
         function showSpoiler(obj) {
-            var inner = obj.parentNode.getElementsByTagName('div')[0];
-            if (inner.style.display == 'none') {
-                inner.style.display = '';7
-            } else {
-                inner.style.display = 'none';
-            }
+            $(obj.parentNode.getElementsByTagName('div')[0]).collapse('toggle')
          } </script>
 </head>
 <body>
-<a href="index.php">Main Page</a><br>
-<a href="show.php?id=ips">Show Remote IP addresses</a><br>
-<a href="show.php?id=logins">Show Login attempts</a><br>
-<a href="show.php?id=Playlogs">Playback sessions</a><br>
-<a href="show.php?id=sensorHitRate">Show Sensor Hitrate</a><br>
-<a href="show.php?id=textlogs">Show Text logs</a><br><br>
+<div class="navbar">
+  <div class="navbar-inner">
+    <a class="brand" href="#">Title</a>
+    <ul class="nav">
+    <li><a href="index.php">Main Page</a></li>
+    <li><a href="show.php?id=ips">Show Remote IP addresses</a></li>
+    <li><a href="show.php?id=logins">Show Login attempts</a></li>
+    <li><a href="show.php?id=Playlogs">Playback sessions</a></li>
+    <li><a href="show.php?id=sensorHitRate">Show Sensor Hitrate</a></li>
+    <li><a href="show.php?id=textlogs">Show Text logs</a></li>
+    </ul>
+  </div>
+</div>
