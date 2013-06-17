@@ -11,7 +11,7 @@ function printInput($id) {
     $line=0;
     while ($line < $num) {
         $input=mysql_result($gotInput,$line,"input");
-        echo "$input<br>\n";
+        echo "<code>$input</code><br>\n";
         $line++;
     }
 
