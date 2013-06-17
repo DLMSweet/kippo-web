@@ -165,7 +165,7 @@ function print_playlogs() {
     sort($dirArray);
     $indexCount	= count($dirArray);
     // print 'em
-    print("<TABLE border=1 cellpadding=5 cellspacing=0 class=whitelinks>\n");
+    print("<TABLE class=\"table\">\n");
     print("<TR><TH>Filename</TH><th>Filesize</th></TR>\n");
     // loop through the array of files and print them all
     for($index=0; $index < $indexCount; $index++) {
