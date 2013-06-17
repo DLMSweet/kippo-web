@@ -152,7 +152,7 @@ function detail_ip($ip) {
 }
 
 function print_playlogs() {
-    $ttyDir="/opt/kippo/log/tty/";
+    $ttyDir="/home/honeypot/kippo/log/tty/";
     // open this directory 
     $myDirectory = opendir($ttyDir);
     // get each entry
