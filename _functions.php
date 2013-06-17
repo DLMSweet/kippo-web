@@ -26,7 +26,7 @@ function printSensorHitCount() {
     $num=mysql_numrows($gotInput);
     $line=0;
     echo "<h3>Hit rate by Sensor</h3>\n";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Sensor Name</td><td>Times Hit</td></tr>\n";
     while ($line < $num) {
         $sensor=mysql_result($gotInput,$line,"sensors.ip");
@@ -47,7 +47,7 @@ function printSensorLoginCount() {
     mysql_close();
     $line=0;
     echo "<h3>Times logged into by Sensor</h3>\n";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Sensor Name</td><td>Times logged into</td></tr>\n";
     while ($line < $num) {
         $sensor=mysql_result($gotInput,$line,"sensors.ip");
@@ -67,7 +67,7 @@ function print_uniqIps() {
     $num=mysql_numrows($gotInput);
     mysql_close();
     $line=0;
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Login Attempts</td><td>IP Address</td><td>GeoIP</td></tr>\n";
     while ($line < $num) {
         $ip=mysql_result($gotInput,$line,"ip");
@@ -87,7 +87,7 @@ function print_loginAttempts() {
     $num=mysql_numrows($gotInput);
     mysql_close();
     $line=0;
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Times Used</td><td>Username</td><td>Password</td></tr>\n";
     while ($line < $num) {
         $timesTried=mysql_result($gotInput,$line,"COUNT(*)");
@@ -136,7 +136,7 @@ function detail_ip($ip) {
     $line=0;
 //    getWhois($ip);
     echo "<h3>Logins attempted from $ip</h3>";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Username</td><td>Password</td><td>Time Tried</td><td>Success</td></tr>\n";
     while ($line < $num) {
         $timeTried=mysql_result($gotInput,$line,"starttime");
