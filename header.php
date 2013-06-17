@@ -7,7 +7,7 @@
 <body>
 <div class="navbar">
   <div class="navbar-inner">
-    <a class="brand" href="#">Title</a>
+    <a class="brand" href="#">Kippo Logs</a>
     <ul class="nav">
     <li><a href="index.php">Main Page</a></li>
     <li><a href="show.php?id=ips">Show Remote IP addresses</a></li>
