@@ -210,7 +210,7 @@ function print_textLogs($count) {
 		mysql_close();
 		if ( $input_count > 0 ) {
 			echo "<tr><td>$id</td><td>$sensor</td><td>$ip</td><td>$starttime</td><td>$endtime</td><td>$input_count</td></tr>\n\n";
-			echo "<tr><td colspan=6>\n<div class='spoiler'>\n<input type='button' onclick='showSpoiler(this);' value='Show Commands run' />\n<div class='inner' style='display:none;'>\n";
+			echo "<tr><td colspan=6>\n<div class='spoiler'>\n<input type='button' onclick='showSpoiler(this);' value='Show Commands run' />\n<div class=\"inner collapse\">\n";
 			printInput($id);
 			echo "</div>\n</div>\n</td></tr>\n";
 		}
