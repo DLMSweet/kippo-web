@@ -3,8 +3,12 @@ include "header.php";
 include "_database.php";
 include "_functions.php";
 
-$toShow=$_GET["id"];
-$ip=$_GET["ip"];
+if(isset($_GET["id"])) {
+    $toShow=$_GET["id"];
+}
+if(isset($_GET["ip"])) {
+    $ip=$_GET["ip"];
+}
 
 
 if ( $toShow == "ips" ) {
