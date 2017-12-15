@@ -5,4 +5,6 @@ include "header.php";
 
 recentAttacks();
 print_textLogs(10);
+
+include "footer.php";
 ?>

@@ -11,7 +11,7 @@ function printInput($id) {
     $line=0;
     while ($line < $num) {
         $input=mysql_result($gotInput,$line,"input");
-        echo "$input<br>\n";
+        echo "<code>$input</code><br>\n";
         $line++;
     }
 
@@ -26,7 +26,7 @@ function printSensorHitCount() {
     $num=mysql_numrows($gotInput);
     $line=0;
     echo "<h3>Hit rate by Sensor</h3>\n";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Sensor Name</td><td>Times Hit</td></tr>\n";
     while ($line < $num) {
         $sensor=mysql_result($gotInput,$line,"sensors.ip");
@@ -47,7 +47,7 @@ function printSensorLoginCount() {
     mysql_close();
     $line=0;
     echo "<h3>Times logged into by Sensor</h3>\n";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Sensor Name</td><td>Times logged into</td></tr>\n";
     while ($line < $num) {
         $sensor=mysql_result($gotInput,$line,"sensors.ip");
@@ -67,7 +67,7 @@ function print_uniqIps() {
     $num=mysql_numrows($gotInput);
     mysql_close();
     $line=0;
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Login Attempts</td><td>IP Address</td><td>GeoIP</td></tr>\n";
     while ($line < $num) {
         $ip=mysql_result($gotInput,$line,"ip");
@@ -87,7 +87,7 @@ function print_loginAttempts() {
     $num=mysql_numrows($gotInput);
     mysql_close();
     $line=0;
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Times Used</td><td>Username</td><td>Password</td></tr>\n";
     while ($line < $num) {
         $timesTried=mysql_result($gotInput,$line,"COUNT(*)");
@@ -136,7 +136,7 @@ function detail_ip($ip) {
     $line=0;
 //    getWhois($ip);
     echo "<h3>Logins attempted from $ip</h3>";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Username</td><td>Password</td><td>Time Tried</td><td>Success</td></tr>\n";
     while ($line < $num) {
         $timeTried=mysql_result($gotInput,$line,"starttime");
@@ -152,7 +152,7 @@ function detail_ip($ip) {
 }
 
 function print_playlogs() {
-    $ttyDir="/opt/kippo/log/tty/";
+    $ttyDir="/home/honeypot/kippo/log/tty/";
     // open this directory 
     $myDirectory = opendir($ttyDir);
     // get each entry
@@ -165,7 +165,7 @@ function print_playlogs() {
     sort($dirArray);
     $indexCount	= count($dirArray);
     // print 'em
-    print("<TABLE border=1 cellpadding=5 cellspacing=0 class=whitelinks>\n");
+    print("<TABLE class=\"table\">\n");
     print("<TR><TH>Filename</TH><th>Filesize</th></TR>\n");
     // loop through the array of files and print them all
     for($index=0; $index < $indexCount; $index++) {
@@ -192,7 +192,7 @@ function print_textLogs($count) {
 	mysql_close();
         
         echo "<h3>Text-based logs of successful logins</h3>";
-	echo "<table border=1>\n";
+	echo "<table class=\"table\">\n";
 	echo "<tr><td><b>Session ID</b></td><td><b>Sensor</b></td><td><b>IP</b></td><td><b>Start Time</b></td><td><b>End Time</b></td><td><b>Commands Run</b></td></tr>\n";
 	$i=0;
 	while ($i < $num and $i < $count) {
@@ -210,7 +210,7 @@ function print_textLogs($count) {
 		mysql_close();
 		if ( $input_count > 0 ) {
 			echo "<tr><td>$id</td><td>$sensor</td><td>$ip</td><td>$starttime</td><td>$endtime</td><td>$input_count</td></tr>\n\n";
-			echo "<tr><td colspan=6>\n<div class='spoiler'>\n<input type='button' onclick='showSpoiler(this);' value='Show Commands run' />\n<div class='inner' style='display:none;'>\n";
+			echo "<tr><td colspan=6>\n<div class='spoiler'>\n<input type='button' onclick='showSpoiler(this);' value='Show Commands run' />\n<div class=\"inner collapse\">\n";
 			printInput($id);
 			echo "</div>\n</div>\n</td></tr>\n";
 		}
@@ -232,7 +232,7 @@ function recentAttacks() {
     mysql_close();
     $line=0;
     echo "<h3>Recent Attacks (last 15 Minutes)</h3>";
-    echo "<table border=1>\n";
+    echo "<table class=\"table\">\n";
     echo "<tr><td>Login Attempts</td><td>IP Address</td><td>GeoIP</td></tr>\n";
     while ($line < $num) {
         $remote_ip=mysql_result($gotInput,$line,"remote_ip");
